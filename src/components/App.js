@@ -43,5 +43,3 @@ export class App extends Component {
     // this.donateList.$rootElement.appendChild(item.$rootElement);
   }
 }
-
-// Далее шаг 18
