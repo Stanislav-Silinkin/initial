@@ -24,22 +24,18 @@ export class App extends Component {
     const donateForm = new Form({ onSubmit: this.onItemCreate.bind(this) });
     this.$rootElement.appendChild(donateForm.$rootElement);
 
-    const donateList = new List();
-    this.$rootElement.appendChild(donateList.$rootElement);
+    this.donateList = new List();
+    this.$rootElement.appendChild(this.donateList.$rootElement);
   }
 
   onItemCreate(amount) {
     const newDonate = { amount: Number(amount), date: new Date() };
     const item = new ListItem(newDonate);
+
     this.state.donates.push(item);
+    this.donateList.addItem(item);
 
-
-
-    // Обновляем общую сумму
-    // this.state.total += newDonate.amount;
-    // this.$total.textContent = this.state.total;
-
-    // Добавляем новый ListItem в список
-    // this.donateList.$rootElement.appendChild(item.$rootElement);
+    this.state.total += newDonate.amount;
+    this.$total.textContent = this.state.total;
   }
 }

@@ -10,12 +10,10 @@ export class ListItem extends Component {
 
     this.$rootElement = document.createElement('div');
     this.$rootElement.className = 'donate-item';
-    this.$rootElement.textContent = this.id;
+    this.$rootElement.textContent = `${this.state.date} - `;
 
-    // this.state.date еще не использовал
     this.$donateItemB = document.createElement('b');
-    this.$donateItemB.textContent = this.amount;
-
+    this.$donateItemB.textContent = `$${this.state.amount}`;
 
     this.$rootElement.append(this.$donateItemB);
   }
