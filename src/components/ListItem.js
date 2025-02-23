@@ -3,9 +3,10 @@ import { Component } from '../core/Component';
 export class ListItem extends Component {
   setup(props) {
     this.state = {
-      id: Date.now(),
-      date: new Date().toLocaleString(),
+      id: props.id,
+      date: props.date,
       amount: props.amount,
+      onDelete: props.onDelete,
     };
 
     this.$rootElement = document.createElement('div');
@@ -15,6 +16,17 @@ export class ListItem extends Component {
     this.$donateItemB = document.createElement('b');
     this.$donateItemB.textContent = `$${this.state.amount}`;
 
-    this.$rootElement.append(this.$donateItemB);
+    this.$deleteButton = document.createElement('button');
+    this.$deleteButton.className = 'delete-button';
+    this.$deleteButton.textContent = 'Удалить';
+
+    this.$rootElement.append(this.$donateItemB, this.$deleteButton);
+
+    this.$deleteButton.addEventListener('click', () => this.deleteElement());
+  }
+
+  deleteElement() {
+    this.state.onDelete(this.state.id);
+    this.$rootElement.remove();
   }
 }

@@ -8,7 +8,8 @@ export class App extends Component {
     this.state = {
       total: 0,
       donates: [],
-    }
+    };
+
     this.$rootElement = document.createElement('div');
     this.$rootElement.className = 'app';
 
@@ -29,13 +30,27 @@ export class App extends Component {
   }
 
   onItemCreate(amount) {
-    const newDonate = { amount: Number(amount), date: new Date() };
-    const item = new ListItem(newDonate);
+    const newDonate = {
+      id: Date.now(),
+      amount: Number(amount),
+      date: new Date().toLocaleString(),
+    };
 
-    this.state.donates.push(item);
+    const item = new ListItem({
+      ...newDonate,
+      onDelete: this.onItemDelete.bind(this),
+    });
+
+    this.state.donates.push(newDonate);
     this.donateList.addItem(item);
 
     this.state.total += newDonate.amount;
+    this.$total.textContent = this.state.total;
+  }
+
+  onItemDelete(id) {
+    this.state.donates = this.state.donates.filter(donate => donate.id !== id);
+    this.state.total = this.state.donates.reduce((sum, donate) => sum + donate.amount, 0);
     this.$total.textContent = this.state.total;
   }
 }
